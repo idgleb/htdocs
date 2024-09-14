@@ -4,15 +4,13 @@ require_once "funciones.php";
 
 $cat = $_REQUEST['cat'] ?? null;
 
-$lista_menu = getMenu($cat);
-
-//$categorias = getCategoriasMenu();
-
-//sort($categorias);
-
-
+$categoriasUnicas = getCategoriasUnicos();
 
 echo $cat;
+echo "<br>";
+var_dump($categoriasUnicas);
+
+$lista_menu = getMenu($cat);
 
 ?>
 
@@ -32,18 +30,16 @@ echo $cat;
     <div class="container">
         <h1 class="text text-center"> Menú </h1>
 
-        <form action="menu.php" method="post">
+        <form action="menu.php" method="post" class="mb-3">
+    
             <label for="cat" class="form-label">Filtrar por categoría</label>
-            <select id="cat" name="cat" class="form-control">
+            <select id="cat" name="cat" class="form-control mb-3">
 
+                <option value="">Todo</option>
 
-
-                <?php ?>
-
-                <option value="Pizzas">Pizzas</option>
-                <option value="Ensaladas">Ensaladas</option>
-                <option value="Hamburguesas">Hamburguesas</option>
-                <option value="Bebidas">Bebidas</option>
+                <?php foreach ($categoriasUnicas as $item): ?>
+                    <option value="<?php echo $item ?>", <?php if ($item==$cat) echo "selected" ?>><?php echo $item ?></option>
+                <?php endforeach; ?>
 
             </select>
             <button type="submit" class="btn btn-primary">Filtrar</button>
@@ -63,25 +59,18 @@ echo $cat;
                 <?php
                 foreach ($lista_menu as $item): ?>
 
-                    <?php // if ($item['categoria'] == $cat): ?>
-
-
-
-                        <tr class="caption">
-                            <td><img src="img/<?php echo $item['categoria'] ?>.png" title="<?php echo $item['categoria'] ?>"> <?php echo $item['categoria'] ?></td>
-                            <td> <?php echo $item['nombre'] ?></td>
-                            <td>
-                                <?php if ($item['descuento'] == 0): ?>
-                                    <?php echo $item['precio']; ?>
-                                <?php else: ?>
-                                    <span class="text-success"><?php echo $item['precio'] - $item['descuento']; ?></span>
-                                    <span class="text-decoration-line-through"><?php echo " " . $item['precio']; ?></span>
-                                <?php endif; ?>
-                            </td>
-                        </tr>
-
-                    <?php // endif; ?>
-
+                    <tr class="caption">
+                        <td><img src="img/<?php echo $item['categoria'] ?>.png" title="<?php echo $item['categoria'] ?>"> <?php echo $item['categoria'] ?></td>
+                        <td> <?php echo $item['nombre'] ?></td>
+                        <td>
+                            <?php if ($item['descuento'] == 0): ?>
+                                <?php echo $item['precio']; ?>
+                            <?php else: ?>
+                                <span class="text-success"><?php echo $item['precio'] - $item['descuento']; ?></span>
+                                <span class="text-decoration-line-through"><?php echo " " . $item['precio']; ?></span>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
 
                 <?php endforeach; ?>
 

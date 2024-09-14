@@ -2,8 +2,6 @@
 
 function getMenu($categoria = null)
 {
-
-
     $lista_menu = [
         ['codigo' => 1, 'nombre' => 'Pizza con jamón y huevo', 'categoria' => 'Pizzas', 'precio' => 2000, 'descuento' => 0],
         ['codigo' => 2, 'nombre' => 'Pizza napolitana', 'categoria' => 'Pizzas', 'precio' => 2500, 'descuento' => 0],
@@ -21,12 +19,30 @@ function getMenu($categoria = null)
 
     $arrayFiltrado = [];
 
-    foreach ($lista_menu as $item){
-        if ($categoria==$item['categoria']){
-            $arrayFiltrado[] = $item;
+    if ($categoria){
+        foreach ($lista_menu as $item){
+            if ($categoria==$item['categoria']){
+                $arrayFiltrado[] = $item;
+            }
+        }
+        return $arrayFiltrado;
+    }else{
+        return $lista_menu;
+    }
+    
+}
+
+function getCategoriasUnicos(){
+    $arrMenu = getMenu();
+    $categoriasUnicas = [];
+    foreach ($arrMenu as $item){
+        if (!in_array($item['categoria'], $categoriasUnicas)){
+            $categoriasUnicas[] = $item['categoria'];
         }
     }
 
-
-    return $arrayFiltrado;
+    sort($categoriasUnicas);
+    
+    return $categoriasUnicas;
 }
+
