@@ -1,6 +1,7 @@
 <?php
 
 function getMenu() {
+    
     return [
     ['codigo' => 1, 'nombre' => 'Pizza con jamón y huevo', 'categoria' => 'Pizzas', 'precio' => 20000, 'descuento' => 0],
     ['codigo' => 2, 'nombre' => 'Pizza napolitana', 'categoria' => 'Pizzas', 'precio' => 25000, 'descuento' => 0],
