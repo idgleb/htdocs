@@ -20,12 +20,19 @@ function getMenu($categoria = null)
     $arrayFiltrado = [];
 
     if ($categoria){
-        foreach ($lista_menu as $item){
+
+/*         foreach ($lista_menu as $item){
             if ($categoria==$item['categoria']){
                 $arrayFiltrado[] = $item;
             }
         }
-        return $arrayFiltrado;
+        return $arrayFiltrado; */
+
+        return $arrayFiltrado = array_filter($lista_menu, function ($item) use ($categoria) {
+            return $categoria==$item['categoria'];
+        });
+
+
     }else{
         return $lista_menu;
     }
@@ -33,6 +40,7 @@ function getMenu($categoria = null)
 }
 
 function getCategoriasUnicos(){
+
     $arrMenu = getMenu();
     $categoriasUnicas = [];
     foreach ($arrMenu as $item){
