@@ -29,6 +29,7 @@ include 'layout/metedatos_css.php';
                 // Convertir las características de la cadena a un array
                 $caracteristicas = explode(',', $row['caracteristicas']);
                 $iter++;
+                $imgSinExt = obtenerNombreDeArchivoSinExt($row['img']);
 
                 /////// lista de productos /////////
                 if ($iter % 2 != 0): ?>
@@ -37,8 +38,8 @@ include 'layout/metedatos_css.php';
 
                     <div class="caja_producto">
                         <div class="caja_prod_baton">
-                            <figure><img id="img_<?php echo $row['img']; ?>" src="img/<?php echo $row['img']; ?>.png" alt="<?php echo $row['img']; ?>"></figure>
-                            <a class="baton" href="#venta_<?php echo $row['img']; ?>">Ver más</a>
+                            <figure><img class="imagen_prod" id="img_<?php echo $imgSinExt; ?>" src="img/<?php echo $row['img']; ?>" alt="<?php echo $row['img']; ?>"></figure>
+                            <a class="baton" href="#venta_<?php echo $imgSinExt; ?>">Ver más</a>
                         </div>
                         <div class="text_prod_cont">
                             <h3><?php echo $row['nombre']; ?></h3>
@@ -56,10 +57,10 @@ include 'layout/metedatos_css.php';
                 <!--///////////////////////////////-->
 
                 <!--lista de ventanas modales para productos////////-->
-                <div id="venta_<?php echo $row['img']; ?>">
+                <div id="venta_<?php echo $imgSinExt; ?>">
                     <div class="modal_prod">
                         <div class="caja_img_producto_mod">
-                            <img id="img_<?php echo $row['img']; ?>_mod" src="img/<?php echo $row['img']; ?>.png" alt="<?php echo $row['img']; ?>">
+                            <img class="imagen_prod" id="img_<?php echo $imgSinExt; ?>_mod" src="img/<?php echo $row['img']; ?>" alt="<?php echo $row['img']; ?>">
                         </div>
                         <div class="text_prod_cont">
                             <h3><?php echo $row['nombre']; ?></h3>
@@ -69,7 +70,7 @@ include 'layout/metedatos_css.php';
                                 <?php endforeach ?>
                             </ul>
                         </div>
-                        <a href="#img_<?php echo $row['img']; ?>">X</a>
+                        <a href="#img_<?php echo $imgSinExt; ?>">X</a>
                     </div>
                 </div>
                 <!--////////////////////////-->
@@ -81,7 +82,7 @@ include 'layout/metedatos_css.php';
         <?php
 
         endif;
-        
+
         ?>
 
 

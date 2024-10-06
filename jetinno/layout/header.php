@@ -2,15 +2,13 @@
 <header>
 
 <div class="width90centr">
+
     <div class="navarriba">
         <a href="index.php"><div class="logo"></div></a>
         <div class="menu">
             <figure><img src="img/hamburgesa.png" alt="menu"></figure>
             <div class="menu_text">
-                <a href="index.php">INICIO</a>
-                <a href="productos.php">PRODUCTOS</a>
-                <a href="tecnologia.php">TECNOLOGÍA</a>
-                <a href="contactos.php">CONTÁCTENOS</a>
+                <?php include "enlases_menu.php";?>
             </div>
         </div>
     </div>
@@ -36,5 +34,8 @@
     <figure class="conteinedor_garantia">
         <img id="garantia" src="img/garantia.png" alt="garantia">
     </figure>
+
+    
 </div>
+
 </header>

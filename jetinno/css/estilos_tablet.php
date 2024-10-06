@@ -14,9 +14,21 @@ font-family: Verdana, Geneva, Tahoma, sans-serif;
 font-size: 14pt;
 }
 
+.imagen_prod{
+    width: 130px;
+}
+
 header {
 padding-top: 40px;
 height: 490px;
+background-size: cover;
+background-position: center;
+background-image: url(../img/fondo_header.png);
+}
+
+.admin_header {
+padding-top: 50px;
+height: 100px;
 background-size: cover;
 background-position: center;
 background-image: url(../img/fondo_header.png);
@@ -337,10 +349,10 @@ margin-bottom: 4%;
 
 
 
-#ventajamodal,
 <?php
-imprimirListaDeIdProdParaVentajasModalesCSS("#venta_", "");
+listaModal();
 ?>
+,#ventajamodal
 {
 position: fixed;
 top: 0;
@@ -353,10 +365,10 @@ display: none;
 }
 
 
-#ventajamodal:target,
 <?php
-imprimirListaDeIdProdParaVentajasModalesCSS("#venta_", ":target");
+listaModalTarget();
 ?>
+,#ventajamodal:target
 {
 display: flex;
 flex-direction: row;
@@ -366,7 +378,7 @@ position: fixed;
 z-index: 3;
 }
 
-.modal {
+.modal_cont {
 margin: auto;
 position: relative;
 text-align: justify;
@@ -382,7 +394,7 @@ box-shadow: 0px 0px 20px rgb(255, 255, 255);
 }
 
 
-.modal a,
+.modal_cont a,
 .modal_prod a {
 float: inline-end;
 padding: 10px;
@@ -393,12 +405,12 @@ font-weight: bold;
 border-radius: 15px;
 }
 
-.modal a:hover,
+.modal_cont a:hover,
 .modal_prod a:hover {
 color: rgb(0, 110, 255);
 }
 
-.modal h2 {
+.modal_cont h2 {
 padding: 20px;
 font-size: 20pt;
 }
@@ -436,10 +448,6 @@ height: 240px;
 margin: 10px;
 }
 
-#img_prod1_mod,
-#img_prod2_mod {
-height: 350px;
-}
 
 .text_prod_cont {
 margin-top: 3%;
@@ -618,8 +626,8 @@ text-align: center;
 
 .text-circulo i {
 color: #ffffff;
-font-size: 44px;
-line-height: 67px;
+font-size: 42px;
+line-height: 62px;
 transition: .3s;
 transition: .5s ease-in-out;
 animation: 1200ms ease 0s normal none 1 running shake;

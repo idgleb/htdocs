@@ -49,7 +49,7 @@
     
 
     <div id="ventajamodal">
-        <div class="modal">
+        <div class="modal_cont">
             <a href="#">X</a>
             <h2>A la brevedad nos pondremos en contacto con usted</h2>
         </div>

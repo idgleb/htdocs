@@ -7,15 +7,17 @@ include_once "funciones.php";
 
 ?>
 
-#ventajamodal,
+
 <?php
-imprimirListaDeIdProdParaVentajasModalesCSS("#venta_", "");
+listaModal();
 ?>
+,#ventajamodal
 
 <p></p>
 
 
-#ventajamodal:target,
+
 <?php
-imprimirListaDeIdProdParaVentajasModalesCSS("#venta_", ":target");
+listaModalTarget();
 ?>
+,#ventajamodal:target

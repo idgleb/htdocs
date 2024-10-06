@@ -7,12 +7,10 @@
                 <div class="logo"></div>
             </a>
             <div class="menu">
-                <?php include "enlases_menu.php"; ?>
+                <?php include "admin_enlases_menu.php"; ?>
             </div>
         </div>
 
 
     </div>
 </footer>
-
-<?php include 'whatsapp.php'; ?>
