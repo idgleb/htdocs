@@ -1,32 +1,16 @@
 <?php
-// Conexión a la base de datos
-$host = 'localhost';
-$user = 'root';
-$password = '';
-$dbname = 'jetinno_base_de_datos';
 
-// Crear conexión
-$conn = new mysqli($host, $user, $password, $dbname);
-
-// Verificar conexión
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-}
-
-// Consulta para obtener los productos
-$sql = "SELECT id, nombre, img, caracteristicas FROM productos";
-$result = $conn->query($sql);
+include_once "funciones.php";
+$result = obtenerProdDeBase();
 
 ?>
 
-
-
-
-
 <!DOCTYPE html>
 
-<?php $title = "PRODUCTOS"; ?>
-<?php include 'layout/metedatos_css.php'; ?>
+<?php
+$title = "PRODUCTOS";
+include 'layout/metedatos_css.php';
+?>
 
 <body>
     <?php include 'layout/header.php'; ?>
@@ -45,6 +29,7 @@ $result = $conn->query($sql);
                 $caracteristicas = explode(',', $row['caracteristicas']);
                 $iter++;
 
+                /////// lista de productos /////////
                 if ($iter % 2 != 0): ?>
                     <div class="col_row">
                     <?php endif; ?>
@@ -67,40 +52,36 @@ $result = $conn->query($sql);
                     <?php if ($iter % 2 == 0 || $iter == $result->num_rows): ?>
                     </div>
                 <?php endif; ?>
+                <!--///////////////////////////////-->
 
-
-
+                <!--lista de ventanas modales para productos////////-->
                 <div id="venta_<?php echo $row['img']; ?>">
-                <div class="modal_prod">
-                    <div class="caja_img_producto_mod">
-                        <img id="img_<?php echo $row['img']; ?>_mod" src="img/<?php echo $row['img']; ?>.png" alt="<?php echo $row['img']; ?>">
+                    <div class="modal_prod">
+                        <div class="caja_img_producto_mod">
+                            <img id="img_<?php echo $row['img']; ?>_mod" src="img/<?php echo $row['img']; ?>.png" alt="<?php echo $row['img']; ?>">
+                        </div>
+                        <div class="text_prod_cont">
+                            <h3><?php echo $row['nombre']; ?></h3>
+                            <ul>
+                                <?php foreach ($caracteristicas as $caracteristica): ?>
+                                    <li><?php echo trim($caracteristica); ?></li>
+                                <?php endforeach ?>
+                            </ul>
+                        </div>
+                        <a href="#img_<?php echo $row['img']; ?>">X</a>
                     </div>
-                    <div class="text_prod_cont">
-                        <h3><?php echo $row['nombre']; ?></h3>
-                        <ul>
-                            <?php foreach ($caracteristicas as $caracteristica): ?>
-                                <li><?php echo trim($caracteristica); ?></li>
-                            <?php endforeach ?>
-                        </ul>
-                    </div>
-                    <a href="#img_<?php echo $row['img']; ?>">X</a>
                 </div>
-            </div>
-
-
+                <!--////////////////////////-->
 
             <?php
             endwhile;
         else : ?>
             <h2>No se encontraron productos</h2>
         <?php
-            
+
         endif;
-        $conn->close();
+        
         ?>
-
-
-
 
 
         <section>
@@ -109,8 +90,6 @@ $result = $conn->query($sql);
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </section>
-
-
 
     </main>
 

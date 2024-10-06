@@ -1,25 +1,8 @@
 <?php
+
 header("Content-type: text/css; charset: UTF-8");
 
-function obtenerProdDeBase(){
-    // Conexión a la base de datos
-$host = 'localhost';
-$user = 'root';
-$password = '';
-$dbname = 'jetinno_base_de_datos';
-// Crear conexión
-$conn = new mysqli($host, $user, $password, $dbname);
-// Verificar conexión
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-}
-// Consulta para obtener los productos
-$sql = "SELECT img FROM productos";
-$result = $conn->query($sql);
-$conn->close();
-return $result;
-}
-
+include_once "../funciones.php";
 
 ?>
 
@@ -354,31 +337,9 @@ margin-bottom: 4%;
 
 
 #ventajamodal,
-
 <?php
-
-$result = obtenerProdDeBase();
-
-if ($result->num_rows > 0) :
-    $iter = 0;
-    while ($row = $result->fetch_assoc()):
-        $iter++;
+imprimirListaDeIdProdParaVentajasModales("#venta_", "");
 ?>
-        #venta_<?php echo $row['img']; ?>
-
-        <?php if ($iter != $result->num_rows): ?>
-            ,
-        <?php endif; ?>
-
-    <?php
-    endwhile;
-else :
-    ?>
-    <h2>No se encontraron productos</h2>
-<?php
-endif;
-?>
-
 {
 position: fixed;
 top: 0;
@@ -392,31 +353,9 @@ display: none;
 
 
 #ventajamodal:target,
-
 <?php
-
-$result = obtenerProdDeBase();
-
-if ($result->num_rows > 0) :
-    $iter = 0;
-    while ($row = $result->fetch_assoc()):
-        $iter++;
+imprimirListaDeIdProdParaVentajasModales("#venta_", ":target");
 ?>
-        #venta_<?php echo $row['img'];?>:target
-
-        <?php if ($iter != $result->num_rows): ?>
-            ,
-        <?php endif; ?>
-
-    <?php
-    endwhile;
-else :
-    ?>
-    <h2>No se encontraron productos</h2>
-<?php
-endif;
-?>
-
 {
 display: flex;
 flex-direction: row;
