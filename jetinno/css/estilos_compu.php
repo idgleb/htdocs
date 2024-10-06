@@ -146,23 +146,17 @@ background-color: rgb(255, 255, 255);
 
 
 .caja_form_mapa {
-background-image: url(../img/grano_gota.png);
-background-size: cover;
-/* Ajusta el tamaño del contenedor al tamaño de la imagen */
-background-position: center;
-background-repeat: no-repeat;
-width: 100%;
-/* Ajusta el ancho al 100% del contenedor padre */
-height: auto;
-/* Ajusta la altura automáticamente */
+    background-image: url(../img/grano_gota.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 
-display: flex;
-flex-direction: row;
-align-items: center;
+    width: 90%; 
+    height: 1145px;
 
-align-items: center;
-width: 90%;
-height: 945px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 
 }
 
@@ -338,7 +332,7 @@ margin-bottom: 4%;
 
 #ventajamodal,
 <?php
-imprimirListaDeIdProdParaVentajasModales("#venta_", "");
+imprimirListaDeIdProdParaVentajasModalesCSS("#venta_", "");
 ?>
 {
 position: fixed;
@@ -354,7 +348,7 @@ display: none;
 
 #ventajamodal:target,
 <?php
-imprimirListaDeIdProdParaVentajasModales("#venta_", ":target");
+imprimirListaDeIdProdParaVentajasModalesCSS("#venta_", ":target");
 ?>
 {
 display: flex;

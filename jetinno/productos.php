@@ -1,7 +1,8 @@
 <?php
 
 include_once "funciones.php";
-$result = obtenerProdDeBase();
+$redirectSiError = true;
+$result = obtenerProdDeBase($redirectSiError);
 
 ?>
 

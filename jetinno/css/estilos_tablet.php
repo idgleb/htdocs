@@ -339,7 +339,7 @@ margin-bottom: 4%;
 
 #ventajamodal,
 <?php
-imprimirListaDeIdProdParaVentajasModales("#venta_", "");
+imprimirListaDeIdProdParaVentajasModalesCSS("#venta_", "");
 ?>
 {
 position: fixed;
@@ -355,7 +355,7 @@ display: none;
 
 #ventajamodal:target,
 <?php
-imprimirListaDeIdProdParaVentajasModales("#venta_", ":target");
+imprimirListaDeIdProdParaVentajasModalesCSS("#venta_", ":target");
 ?>
 {
 display: flex;
