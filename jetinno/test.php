@@ -2,6 +2,7 @@
 //agregar productos
 //guardar errorres a base
 //crear base si no existe
+//eliminar imagen cuando cambiamos
 
 include_once "funciones.php";
 

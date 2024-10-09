@@ -11,28 +11,31 @@
 
         <div class="width90centr">
             <div class="col_row">
-                
+
                 <a href="admin_agragar.php">
-                <div class="caja_vertud">
-                    <figure><img src="img/virtud1.png" alt="virtud"></figure>
-                    <div>
-                        <h3>AGRGAR PRODUCTOS</h3>
-                        <p>
-                            Agrege los productos a base de datos.
-                        </p>
+                    <div class="caja_vertud">
+                        <figure><img src="img/virtud1.png" alt="virtud"></figure>
+                        <div>
+                            <h3>AGRGAR PRODUCTOS</h3>
+                            <p>
+                                Agrege los productos a base de datos.
+                            </p>
+                        </div>
                     </div>
-                </div>
                 </a>
 
-                <div class="caja_vertud">
-                    <figure><img src="img/virtud2.png" alt="virtud"></figure>
-                    <div>
-                        <h3>COMING SOON..</h3>
-                        <p>
-                            Discripcion...
-                        </p>
+                <a href="admin_corregir.php">
+                    <div class="caja_vertud">
+                        <figure><img src="img/virtud2.png" alt="virtud"></figure>
+                        <div>
+                            <h3>CORREGIR PRODUCTOS</h3>
+                            <p>
+                                Corrige imagenes, nombres y caracteristicas de los productos.
+                            </p>
+                        </div>
                     </div>
-                </div>
+                </a>
+
                 <div class="caja_vertud">
                     <figure><img src="img/virtud3.png" alt="virtud"></figure>
                     <div>

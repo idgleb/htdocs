@@ -1,5 +1,17 @@
 <?php
 
+function conectarDB()
+{
+
+    $host = 'localhost';
+    $user = 'root';
+    $password = '';
+    $dbname = 'jetinno_base_de_datos';
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+    return new mysqli($host, $user, $password, $dbname);
+}
+
+
 function sanitario($data)
 {
     $data = trim($data);
@@ -10,15 +22,10 @@ function sanitario($data)
 
 function obtenerProdDeBase($redirectSiError)
 {
-    // Conexión a la base de datos
-    $host = 'localhost';
-    $user = 'root';
-    $password = '';
-    $dbname = 'jetinno_base_de_datos';
     //intentemos a conectar
     try {
-        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-        $conn = @new mysqli($host, $user, $password, $dbname);
+        // Conexión a la base de datos
+        $conn = conectarDB();
         // Consulta para obtener los productos
         $sql = "SELECT id, nombre, img, caracteristicas FROM productos";
         $result = $conn->query($sql);
@@ -29,6 +36,31 @@ function obtenerProdDeBase($redirectSiError)
             header("Location: error.php?error=" . urlencode($e));
             die();
         }
+        return null;
+    }
+}
+
+function obtenerUnProd($nombreImagen)
+{
+
+    // Intentemos conectar y manejar posibles excepciones
+    try {
+        // Conexión a la base de datos
+        $conn = conectarDB();
+        $stmt = $conn->prepare("SELECT * FROM productos WHERE img = ?");
+        $stmt->bind_param('s', $nombreImagen);
+        $stmt->execute();
+        $result = $stmt->get_result(); // Obtener el resultado de la consulta ejecutada
+        if ($result->num_rows > 0) {
+            $producto = $result->fetch_assoc();
+        } else {
+            $producto = null;
+        }
+        $stmt->close();
+        $conn->close();
+        return $producto;
+    } catch (mysqli_sql_exception $e) {
+        echo "Error en la base de datos: " . $e->getMessage();
         return null;
     }
 }
@@ -45,6 +77,19 @@ function obtenerNombreDeArchivoSinExt($nombreArchivo)
     }
 
     return $imgSinExt;
+}
+function obtenerExtDeArchivo($nombreArchivo)
+{
+    $posicionDePunto = strpos($nombreArchivo, '.');
+    // Si el símbolo '.' se encuentra en la cadena
+    if ($posicionDePunto !== false) {
+        // Obtener la subcadena despues del '.'
+        $imgExt = substr($nombreArchivo, $posicionDePunto + 1);
+    } else {
+        $imgExt = "";
+    }
+
+    return $imgExt;
 }
 
 function imprimirListaDeIdProdParaVentajasModalesCSS($beforStr, $afterStr)

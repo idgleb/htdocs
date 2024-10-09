@@ -13,6 +13,10 @@ font-family: Verdana, Geneva, Tahoma, sans-serif;
 font-size: 14pt;
 }
 
+.oculto{
+    display: none;
+}
+
 .imagen_prod{
     width: 110px;
 }
@@ -27,7 +31,7 @@ background-image: url(../img/fondo_header.png);
 
 .admin_header {
 padding-top: 50px;
-height: 100px;
+height: 150px;
 background-size: cover;
 background-position: center;
 background-image: url(../img/fondo_header.png);
