@@ -20,7 +20,7 @@ function sanitario($data)
     return $data;
 }
 
-function obtenerProdDeBase($redirectSiError)
+function obtenerProdDeBase2($redirectSiError)
 {
     //intentemos a conectar
     try {
@@ -39,6 +39,51 @@ function obtenerProdDeBase($redirectSiError)
         return null;
     }
 }
+
+function obtenerProdDeBase($redirectSiError, $limit = null, $offset = null)
+{
+    // Intentemos conectar
+    try {
+        // Conexión a la base de datos
+        $conn = conectarDB();
+        // Consulta para obtener los productos, agregando paginación si es necesario
+        $sql = "SELECT id, nombre, img, caracteristicas FROM productos";
+        if ($limit !== null && $offset !== null) {
+            $sql .= " LIMIT ? OFFSET ?";
+        }
+        // Preparar la consulta
+        $stmt = $conn->prepare($sql);
+        if ($limit !== null && $offset !== null) {
+            $stmt->bind_param('ii', $limit, $offset);
+        }
+        $stmt->execute();
+        // Obtener el resultado
+        $result = $stmt->get_result();
+        $stmt->close();
+        $conn->close();
+        return $result;
+    } catch (mysqli_sql_exception $e) {
+        // Si hay un error y se requiere redirección
+        if ($redirectSiError) {
+            if (!headers_sent()) {
+                header("Location: error.php?error=" . urlencode($e->getMessage()));
+                exit();
+            } else {
+                echo "<script>window.location.href='error.php?error=" . urlencode($e->getMessage()) . "';</script>";
+                exit();
+            }
+        }
+        // Cerrar conexión en caso de error
+        if (isset($stmt)) {
+            $stmt->close();
+        }
+        if (isset($conn)) {
+            $conn->close();
+        }
+        return null;
+    }
+}
+
 
 function obtenerUnProd($nombreImagen)
 {

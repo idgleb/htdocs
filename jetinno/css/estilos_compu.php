@@ -124,6 +124,13 @@ padding: 10px;
 align-items: center; /* Alinea los elementos al fondo */
 }
 
+.col_row_top {
+display: flex;
+flex-direction: row;
+justify-content: center;
+padding: 10px;
+}
+
 .caja_producto {
 display: flex;
 flex-direction: row;

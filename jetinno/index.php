@@ -10,7 +10,7 @@
     <main>
 
         <div class="width90centr">
-            <div class="col_row">
+            <div class="col_row_top">
                 <div class="caja_vertud">
                     <figure><img src="img/virtud1.png" alt="virtud"></figure>
                     <div>

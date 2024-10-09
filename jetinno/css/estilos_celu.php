@@ -161,7 +161,7 @@ background-color: rgb(255, 255, 255);
 
 
 
-.col_row {
+.col_row_top {
 
 display: flex;
 flex-direction: column;
