@@ -73,7 +73,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $stmt->close();
                     $conn->close();
                 } catch (mysqli_sql_exception $e) {
-                    echo "Error en la base de datos: " . htmlspecialchars($e->getMessage());
+                    manejarError($e, "Error en la base de datos", false);
+                    echo "Error en la base de datos";
                 }
             } else {
                 echo "Error al mover la imagen.";

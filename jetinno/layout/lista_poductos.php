@@ -2,8 +2,7 @@
 
 <?php
 
-$productosPorPagina = 2;
-
+$productosPorPagina = 5;
 try {
     // Conexión a la base de datos
     $conn = conectarDB();
@@ -14,61 +13,16 @@ try {
     $totalPaginas = ceil($totalProductos / $productosPorPagina);
     $conn->close();
 } catch (mysqli_sql_exception $e) {
-    if ($redirectSiError) {
-        header("Location: error.php?error=" . urlencode($e));
-        die();
-    }
-    return null;
+    manejarError($e, "Error en la base de datos", true);
 }
 
 $paginaActual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+$paginaActual = sanitario($paginaActual);
 
 mostrarBotonesNav($paginaActual, $totalPaginas);
 
-function mostrarBotonesNav($paginaActual, $totalPaginas)
-{
-    // Mostrar los botones de navegación usando Bootstrap
-    echo '<nav id="nav" aria-label="Page navigation example">';
-    echo '<ul class="pagination justify-content-center">';
-    // Enlace a la primera página
-    if ($paginaActual > 1) {
-        echo '<li class="page-item"><a class="page-link" href="?pagina=1#nav">&laquo; Primera</a></li>';
-    }
-    // Enlace a la página anterior
-    if ($paginaActual > 1) {
-        echo '<li class="page-item"><a class="page-link" href="?pagina=' . ($paginaActual - 1) . '#nav">&lsaquo; Anterior</a></li>';
-    }
-    // Mostrar un rango de enlaces de páginas (por ejemplo, máximo 5)
-    $rango = 2; // Rango de páginas antes y después de la página actual
-    $inicio = max(1, $paginaActual - $rango);
-    $fin = min($totalPaginas, $paginaActual + $rango);
-    if ($inicio > 1) {
-        echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
-    }
-    for ($i = $inicio; $i <= $fin; $i++) {
-        if ($i == $paginaActual) {
-            echo '<li class="page-item active"><span class="page-link">' . $i . '</span></li>'; // Página actual
-        } else {
-            echo '<li class="page-item"><a class="page-link" href="?pagina=' . $i . '#nav">' . $i . '</a></li>';
-        }
-    }
-    if ($fin < $totalPaginas) {
-        echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
-    }
-    // Enlace a la página siguiente
-    if ($paginaActual < $totalPaginas) {
-        echo '<li class="page-item"><a class="page-link" href="?pagina=' . ($paginaActual + 1) . '#nav">Siguiente &rsaquo;</a></li>';
-    }
-    // Enlace a la última página
-    if ($paginaActual < $totalPaginas) {
-        echo '<li class="page-item"><a class="page-link" href="?pagina=' . $totalPaginas . '#nav">Última &raquo;</a></li>';
-    }
-    echo '</ul>';
-    echo '</nav>';
-}
-
-
 $offset = ($paginaActual - 1) * $productosPorPagina;
+
 $redirectSiError = true;
 $result = obtenerProdDeBase($redirectSiError, $productosPorPagina, $offset);
 // Verificar si hay prod

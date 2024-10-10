@@ -34,10 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // evitamos procesar datos enviados 
                 $conn->close();
                 $mensaje = "Producto agregado con exito";
             } catch (mysqli_sql_exception $e) {
-                if ($redirectSiError) {
-                    header("Location: error.php?error=" . urlencode($e));
-                    die();
-                }
+                manejarError($e, "Paso algo malo", true);
             }
         } else {
             $mensaje = "Producto agregado con exito";

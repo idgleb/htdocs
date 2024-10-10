@@ -33,8 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
     } catch (mysqli_sql_exception $e) {
-        error_log($e->getMessage(), 3, "error_log.txt");
-        echo "Error en la base de datos. Inténtelo de nuevo más tarde.";
+        manejarError($e, "Error en la base de datos", false);
+        echo "Error en la base de datos.";
     } finally {
         // Cerramos $stmt y $conn en el bloque finally para asegurar que siempre se cierran
         if (isset($stmt)) {

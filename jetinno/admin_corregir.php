@@ -26,8 +26,31 @@ $mensaje = "";
 
             <?php
 
+
+            $productosPorPagina = 5;
+
+            try {
+                // Conexión a la base de datos
+                $conn = conectarDB();
+                // Obtener el número total de productos
+                $totalProductosResult = $conn->query("SELECT COUNT(*) AS total FROM productos");
+                $totalProductos = $totalProductosResult->fetch_assoc()['total'];
+                // Calcular el número total de páginas
+                $totalPaginas = ceil($totalProductos / $productosPorPagina);
+                $conn->close();
+            } catch (mysqli_sql_exception $e) {
+                manejarError($e, "Paso algo malo", true);
+            }
+
+            $paginaActual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+            $paginaActual = sanitario($paginaActual);
+
+            mostrarBotonesNav($paginaActual, $totalPaginas);
+
+            $offset = ($paginaActual - 1) * $productosPorPagina;
+
             $redirectSiError = true;
-            $result = obtenerProdDeBase($redirectSiError);
+            $result = obtenerProdDeBase($redirectSiError, $productosPorPagina, $offset);
 
             // Verificar si hay prod
             if ($result->num_rows > 0) :
@@ -62,17 +85,17 @@ $mensaje = "";
 
                                     <label for="nombre_<?php echo $imgSinExt; ?>" class="form-label">Nombre del Producto</label>
 
-                                    <textarea 
-                                     onchange="subirText('<?php echo $imgSinExt; ?>','<?php echo $extension; ?>','nombre')"
-                                     class="form-control" 
-                                     id="nombre_<?php echo $imgSinExt; ?>" 
-                                     name="nombre_<?php echo $imgSinExt; ?>" 
-                                     rows="2"><?php echo $row['nombre']; ?></textarea>
+                                    <textarea
+                                        onchange="subirText('<?php echo $imgSinExt; ?>','<?php echo $extension; ?>','nombre')"
+                                        class="form-control"
+                                        id="nombre_<?php echo $imgSinExt; ?>"
+                                        name="nombre_<?php echo $imgSinExt; ?>"
+                                        rows="2"><?php echo $row['nombre']; ?></textarea>
 
                                     <label for="caracteristicas_<?php echo $imgSinExt; ?>" class="form-label">Características del Producto</label>
 
-                                    <textarea 
-                                    onchange="subirText('<?php echo $imgSinExt; ?>','<?php echo $extension; ?>','caracteristicas')" ,class="form-control" id="caracteristicas_<?php echo $imgSinExt; ?>" name="caracteristicas_<?php echo $imgSinExt; ?>" rows="4"><?php echo $row['caracteristicas']; ?></textarea>
+                                    <textarea
+                                        onchange="subirText('<?php echo $imgSinExt; ?>','<?php echo $extension; ?>','caracteristicas')" ,class="form-control" id="caracteristicas_<?php echo $imgSinExt; ?>" name="caracteristicas_<?php echo $imgSinExt; ?>" rows="4"><?php echo $row['caracteristicas']; ?></textarea>
 
                                 </div>
                             </div>
@@ -87,6 +110,7 @@ $mensaje = "";
 
                 <?php
                 endwhile;
+                mostrarBotonesNav($paginaActual, $totalPaginas);
             else : ?>
                 <h2>No se encontraron productos</h2>
             <?php
@@ -156,7 +180,7 @@ $mensaje = "";
 
     function subirText(imgSinExt, imgExt, tipo) {
 
-        var textNombre = document.getElementById(tipo+'_' + imgSinExt);
+        var textNombre = document.getElementById(tipo + '_' + imgSinExt);
 
         if (textNombre) {
 
@@ -189,7 +213,7 @@ $mensaje = "";
                 });
 
         } else {
-            alert("El elemento "+tipo+"_" + imgSinExt + " no existe");
+            alert("El elemento " + tipo + "_" + imgSinExt + " no existe");
         }
     }
 </script>

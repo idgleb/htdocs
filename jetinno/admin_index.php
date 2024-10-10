@@ -10,7 +10,7 @@
     <main>
 
         <div class="width90centr">
-            <div class="col_row">
+            <div class="col_row_top">
 
                 <a href="admin_agragar.php">
                     <div class="caja_vertud">

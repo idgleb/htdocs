@@ -3,7 +3,10 @@
 
 
 <?php
-$error = $_REQUEST["error"];
+include_once "funciones.php";
+
+$error = sanitario($_REQUEST["error"]);
+
 $title = "CHE, ERROR";
 include 'layout/metedatos_css.php';
 
@@ -11,7 +14,7 @@ include 'layout/metedatos_css.php';
 
 <body>
 
-    <?php include 'layout/header.php'; ?>
+    
 
     <main>
         <div class="width90centr">
@@ -22,7 +25,7 @@ include 'layout/metedatos_css.php';
     </main>
 
 
-    <?php include 'layout/footer.php'; ?>
+   
 
 </body>
 
