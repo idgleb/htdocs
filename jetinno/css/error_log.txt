@@ -1,0 +1,15 @@
+2024-10-16 03:18:51 - Access denied for user 'root'@'localhost' (using password: YES)
+2024-10-16 03:18:51 - Access denied for user 'root'@'localhost' (using password: YES)
+2024-10-16 03:18:51 - Access denied for user 'root'@'localhost' (using password: YES)
+2024-10-17 22:12:43 - php_network_getaddresses: getaddrinfo failed: Host desconocido. 
+2024-10-17 22:12:43 - php_network_getaddresses: getaddrinfo failed: Host desconocido. 
+2024-10-17 22:12:43 - php_network_getaddresses: getaddrinfo failed: Host desconocido. 
+2024-10-17 22:12:55 - php_network_getaddresses: getaddrinfo failed: Host desconocido. 
+2024-10-17 22:13:00 - php_network_getaddresses: getaddrinfo failed: Host desconocido. 
+2024-10-17 22:13:00 - php_network_getaddresses: getaddrinfo failed: Host desconocido. 
+2024-10-17 22:13:06 - php_network_getaddresses: getaddrinfo failed: Host desconocido. 
+2024-10-17 22:13:06 - php_network_getaddresses: getaddrinfo failed: Host desconocido. 
+2024-10-17 22:13:06 - php_network_getaddresses: getaddrinfo failed: Host desconocido. 
+2024-10-17 22:13:25 - php_network_getaddresses: getaddrinfo failed: Host desconocido. 
+2024-10-17 22:13:25 - php_network_getaddresses: getaddrinfo failed: Host desconocido. 
+2024-10-17 22:13:25 - php_network_getaddresses: getaddrinfo failed: Host desconocido. 

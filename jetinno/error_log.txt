@@ -1,0 +1,5 @@
+2024-10-16 03:18:52 - Access denied for user 'root'@'localhost' (using password: YES)
+2024-10-17 22:12:36 - php_network_getaddresses: getaddrinfo failed: Host desconocido. 
+2024-10-17 22:12:51 - php_network_getaddresses: getaddrinfo failed: Host desconocido. 
+2024-10-17 22:13:20 - php_network_getaddresses: getaddrinfo failed: Host desconocido. 
+2024-10-18 01:02:46 - Access denied for user ''@'localhost' (using password: NO)
