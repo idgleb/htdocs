@@ -1,4 +1,0 @@
-Unknown database 'jetinno_base_de_datosk'
-Unknown database 'jetinno_base_de_datosk'
-Unknown database 'jetinno_base_de_datosk'
-No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
