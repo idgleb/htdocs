@@ -41,7 +41,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             [<?php echo $newImgSinExt; ?>] estos corchetes para encontrar el ID de conteinedor que vamos a Actualizar despues de renovar imagen-->
                             <div class="caja_producto">
                                 <div class="caja_prod_baton">
-                                    <figure>
+
+                                    <!-- Contenedor para el spinner, inicialmente oculto -->
+                                    <div id="spinner_<?php echo $newImgSinExt; ?>" class="d-none text-center">
+                                        <div class="spinner-border" role="status">
+                                            <span class="visually-hidden">Cargando...</span>
+                                        </div>
+                                    </div>
+
+                                    <figure id="fig_<?php echo $newImgSinExt; ?>">
                                         <img class="imagen_prod hover"
                                             id="img_<?php echo $newImgSinExt; ?>"
                                             src="<?php echo $newRutaImagen; ?>"

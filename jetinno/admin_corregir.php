@@ -63,7 +63,7 @@ $mensaje = "";
                                 <div class="caja_prod_baton">
 
                                     <!-- Contenedor para el spinner, inicialmente oculto -->
-                                    <div id="spinner" class="d-none text-center">
+                                    <div id="spinner_<?php echo $imgSinExt; ?>" class="d-none text-center">
                                         <div class="spinner-border" role="status">
                                             <span class="visually-hidden">Cargando...</span>
                                         </div>
@@ -168,8 +168,6 @@ $mensaje = "";
     // Función para subir la imagen seleccionada mediante AJAX
     function subirImagen(imgSinExt, imgExt) {
 
-        cerrarTodosPopers();
-
         var input = document.getElementById('input_' + imgSinExt);
         var file = input.files[0];
         if (file) {
@@ -180,7 +178,7 @@ $mensaje = "";
             formData.append('img', img);
 
             // Muestra el spinner  
-            const spinner = document.getElementById('spinner');
+            var spinner = document.getElementById('spinner_' + imgSinExt);
             spinner.classList.remove('d-none'); // Muestra el spinner 
 
             fetch('subir_imagen.php', {
@@ -203,6 +201,8 @@ $mensaje = "";
                     let id = respuesta.substring(inicio, fin);
                     conteiner.id = 'producto_' + id;
 
+                    cerrarTodosPopers();
+
                     obtenerPopers();
 
                 })
@@ -211,7 +211,9 @@ $mensaje = "";
                 })
                 .finally(() => {
                     // Ocultar el spinner al finalizar  
+                    spinner = document.getElementById('spinner_' + imgSinExt);
                     spinner.classList.add('d-none'); // Oculta el spinner  
+                    
                 });
         }
     }
