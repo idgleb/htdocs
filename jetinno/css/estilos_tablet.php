@@ -14,6 +14,10 @@ font-family: Verdana, Geneva, Tahoma, sans-serif;
 font-size: 14pt;
 }
 
+.misombra {
+box-shadow: 0px 0px 20px rgb(74, 74, 74);
+}
+
 .oculto{
     display: none;
 }

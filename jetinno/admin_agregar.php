@@ -11,8 +11,8 @@ $mensaje = "";
 <?php
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') { // evitamos procesar datos enviados por GET
-    $nombreProducto = sanitario($_POST['nombreProducto']);
-    $caracteristicasProducto = sanitario($_POST['caracteristicasProducto']);
+    $nombreProducto = sanitario($_POST['nombreProducto']??"");
+    $caracteristicasProducto = sanitario($_POST['caracteristicasProducto']??"");
     // Procesar la imagen
     if (isset($_FILES['imagenProducto']) && $_FILES['imagenProducto']['error'] === UPLOAD_ERR_OK) {
         $extension = pathinfo($_FILES['imagenProducto']['name'], PATHINFO_EXTENSION);
@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // evitamos procesar datos enviados 
 
             <div class="container mb-5">
                 <h2 class="mb-1">Agregar Producto</h2>
-                <form class="row" action="admin_agragar.php#ventajamodal" method="POST" enctype="multipart/form-data">
+                <form class="row" action="admin_agregar.php#ventajamodal" method="POST" enctype="multipart/form-data">
                     <div class="mb-0">
                         <label for="nombreProducto" class="form-label">Nombre del Producto</label>
                         <input type="text" class="form-control" id="nombreProducto" name="nombreProducto" placeholder="Ingrese el nombre del producto" required>

@@ -5,7 +5,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Verificar si se ha enviado una imagen y un ID de producto
     if (isset($_FILES['imagen']) && isset($_POST['img'])) {
 
-        $imgId = sanitario($_POST['img']); // Obtener el nombre del archivo de producto que vamos a actualizar
+        $imgId = sanitario($_POST['img']??""); // Obtener el nombre del archivo de producto que vamos a actualizar
 
         // Verificar si hubo un error al subir la imagen
         if ($_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             $newRutaImagen = 'img/' . $newNombreImagen;
 ?>
 
-                            <!-- respuesta de servidor ----
+                            <!--enviamos respuesta del servidor ----
                             [<?php echo $newImgSinExt; ?>] estos corchetes para encontrar el ID de conteinedor que vamos a Actualizar despues de renovar imagen-->
                             <div class="caja_producto">
                                 <div class="caja_prod_baton">
@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             echo "No se encontró ningún producto con ese ID.";
                         }
                     } else {
-                        echo "<h2>Error: No se pudo actualizar 555 el producto.</h2>";
+                        echo "<h2>Error: No se pudo actualizar el producto.</h2>";
                     }
 
                     // Cerrar la sentencia y la conexión

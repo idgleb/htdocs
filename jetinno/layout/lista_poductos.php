@@ -2,22 +2,12 @@
 
 <?php
 
+$productosPorPagina = 5;
+
 $paginaActual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
 $paginaActual = sanitario($paginaActual);
 
-$productosPorPagina = 5;
-
-try {
-    $conn = conectarDB(true);
-    // Obtener el número total de productos
-    $totalProductosResult = $conn->query("SELECT COUNT(*) AS total FROM productos");
-    $totalProductos = $totalProductosResult->fetch_assoc()['total'];
-    // Calcular el número total de páginas
-    $totalPaginas = ceil($totalProductos / $productosPorPagina);
-    $conn->close();
-} catch (mysqli_sql_exception $e) {
-    manejarError($e, "Error en la base de datos", true);
-}
+$totalPaginas = calcularTotalPaginas($productosPorPagina);
 
 mostrarBotonesNav($paginaActual, $totalPaginas, true);
 

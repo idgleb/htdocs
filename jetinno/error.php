@@ -1,6 +1,8 @@
 <?php
 include_once "funciones.php";
-$error = sanitario($_REQUEST["error"]);
+
+$error = sanitario($_REQUEST["error"]??"");
+
 ?>
 
 <!DOCTYPE html>

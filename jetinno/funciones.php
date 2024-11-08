@@ -229,3 +229,27 @@ function mostrarBotonesNav($paginaActual, $totalPaginas, $conID = null)
     echo '</ul>';
     echo '</nav>';
 }
+
+function calcularTotalPaginas($productosPorPagina)
+{
+    try {
+        $conn = conectarDB(true);
+        $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM productos");
+        if ($stmt === false) {
+            throw new Exception("Error al preparar la consulta: " . $conn->error);
+        }
+        $stmt->execute();
+        $result = $stmt->get_result();
+        // Obtener el número total de productos
+        $totalProductos = $result->fetch_assoc()['total'];
+        // Calcular el número total de páginas
+        $totalPaginas = ceil($totalProductos / $productosPorPagina);
+        $stmt->close();
+        $conn->close();
+    } catch (mysqli_sql_exception $e) {
+        manejarError($e, "Paso algo malo", true);
+    } catch (Exception $e) {
+        manejarError($e, "error inesperado", true);
+    }
+    return $totalPaginas;
+}

@@ -13,7 +13,7 @@
 
             <div class="col_row_top">
 
-                <a href="admin_agragar.php" class="hover">
+                <a href="admin_agregar.php" class="hover">
                     <div class="caja_vertud">
                         <figure><img src="img/virtud1.png" alt="virtud"></figure>
                         <div>

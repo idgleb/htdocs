@@ -3,15 +3,10 @@ include_once "funciones.php";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $text = $_POST['text'] ?? '';
-    $imgSinExt = $_POST['imgSinExt'] ?? '';
-    $extension = $_POST['extension'] ?? '';
-    $tipo = $_POST['tipo'] ?? '';
-
-    $text = sanitario($text);
-    $imgSinExt = sanitario($imgSinExt);
-    $extension = sanitario($extension);
-    $tipo = sanitario($tipo);
+    $text = sanitario($_POST['text'] ?? '');
+    $imgSinExt = sanitario($_POST['imgSinExt'] ?? '');
+    $extension = sanitario($_POST['extension'] ?? '');
+    $tipo = sanitario($_POST['tipo'] ?? '');
     $nombreImagen = $imgSinExt . '.' . $extension;
 
     try {

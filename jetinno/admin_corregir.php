@@ -22,28 +22,16 @@ $mensaje = "";
     <main>
 
         <div class="width90centr">
-        <h2 class="mb-1">Corregir Productos</h2>
-
+            <h2 class="mb-1">Corregir Productos</h2>
 
             <?php
 
             $productosPorPagina = 5;
 
-            try {
-                // Conexión a la base de datos
-                $conn = conectarDB(true);
-                // Obtener el número total de productos
-                $totalProductosResult = $conn->query("SELECT COUNT(*) AS total FROM productos");
-                $totalProductos = $totalProductosResult->fetch_assoc()['total'];
-                // Calcular el número total de páginas
-                $totalPaginas = ceil($totalProductos / $productosPorPagina);
-                $conn->close();
-            } catch (mysqli_sql_exception $e) {
-                manejarError($e, "Paso algo malo", true);
-            }
-
             $paginaActual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
             $paginaActual = sanitario($paginaActual);
+
+            $totalPaginas = calcularTotalPaginas($productosPorPagina);
 
             mostrarBotonesNav($paginaActual, $totalPaginas, true);
 
@@ -63,7 +51,7 @@ $mensaje = "";
                     $nombreImagen = $imgSinExt . '.' . $extension;
                     $rutaImagen = 'img/' . $nombreImagen;
 
-                    /////// lista de productos /////////
+                    /////// lista de productos para coregir /////////
                     $iter++;
                     if ($iter % 2 != 0): ?>
                         <div class="col_row">
@@ -74,7 +62,14 @@ $mensaje = "";
                             <div class="caja_producto">
                                 <div class="caja_prod_baton">
 
-                                    <figure>
+                                    <!-- Contenedor para el spinner, inicialmente oculto -->
+                                    <div id="spinner" class="d-none text-center">
+                                        <div class="spinner-border" role="status">
+                                            <span class="visually-hidden">Cargando...</span>
+                                        </div>
+                                    </div>
+
+                                    <figure id="fig_<?php echo $imgSinExt; ?>">
                                         <!-- Imagen del producto -->
                                         <img class="imagen_prod hover"
                                             id="img_<?php echo $imgSinExt; ?>"
@@ -145,7 +140,9 @@ $mensaje = "";
 <script>
     var popoverTriggerList;
     var popoverList;
-    document.addEventListener('DOMContentLoaded', function() { obtenerPopers();});
+    document.addEventListener('DOMContentLoaded', function() {
+        obtenerPopers();
+    });
 
     function obtenerPopers() {
         popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
@@ -166,6 +163,8 @@ $mensaje = "";
         document.getElementById('input_' + imgId_SinExt).click(); // Activa el input file oculto
     }
 
+
+
     // Función para subir la imagen seleccionada mediante AJAX
     function subirImagen(imgSinExt, imgExt) {
 
@@ -180,6 +179,10 @@ $mensaje = "";
             let img = imgExt ? `${imgSinExt}.${imgExt}` : imgSinExt;
             formData.append('img', img);
 
+            // Muestra el spinner  
+            const spinner = document.getElementById('spinner');
+            spinner.classList.remove('d-none'); // Muestra el spinner 
+
             fetch('subir_imagen.php', {
                     method: 'POST',
                     body: formData
@@ -190,12 +193,14 @@ $mensaje = "";
                     }
                     return response.text();
                 })
-                .then(texto => {
+                .then(respuesta => {
                     let conteiner = document.getElementById('producto_' + imgSinExt);
-                    conteiner.innerHTML = texto;
-                    let inicio = texto.indexOf('[') + 1;
-                    let fin = texto.indexOf(']');
-                    let id = texto.substring(inicio, fin);
+                    conteiner.innerHTML = respuesta;
+
+                    // Extraer ID de la respuesta
+                    let inicio = respuesta.indexOf('[') + 1;
+                    let fin = respuesta.indexOf(']');
+                    let id = respuesta.substring(inicio, fin);
                     conteiner.id = 'producto_' + id;
 
                     obtenerPopers();
@@ -203,6 +208,10 @@ $mensaje = "";
                 })
                 .catch(error => {
                     alert(error.message);
+                })
+                .finally(() => {
+                    // Ocultar el spinner al finalizar  
+                    spinner.classList.add('d-none'); // Oculta el spinner  
                 });
         }
     }

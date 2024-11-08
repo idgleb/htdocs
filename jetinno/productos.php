@@ -19,10 +19,11 @@ include 'layout/metedatos_css.php';
         </div>
         
         <section>
-            <iframe width="760" height="415" src="https://www.youtube.com/embed/icu3Lys3NKU?si=RXNuVVFrBlUWnWpF"
+            <iframe class="misombra" width="760" height="415" src="https://www.youtube.com/embed/icu3Lys3NKU?si=RXNuVVFrBlUWnWpF"
                 title="YouTube video player"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+            </iframe>
         </section>
 
     </main>
