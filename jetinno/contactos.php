@@ -4,7 +4,6 @@
 
 include_once "funciones.php";
 
-
 ?>
 
 <?php $title = "CONTÁCTENOS"; ?>
@@ -55,7 +54,7 @@ include_once "funciones.php";
                     </div>
                     <button type="submit" class="btn btn-primary w-100">Enviar</button>
                 </form>
-                <!-- Agrega un contenedor para mostrar mensajes -->
+                <!-- contenedor para mostrar mensajes -->
                 <div id="formMessage"></div>
 
             </div>

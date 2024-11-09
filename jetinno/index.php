@@ -48,8 +48,6 @@
         </div>
 
 
-
-
         <section class="baner">
             <h2 class="baner_title">ACERCA DE JETINNO</h2>
             <p class="baner_text">Buen café para inspirar mejor la vida de las personas.</p>

@@ -2,12 +2,11 @@
 include_once "funciones.php";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Verificar si se ha enviado una imagen y un ID de producto
+
     if (isset($_FILES['imagen']) && isset($_POST['img'])) {
 
         $imgId = sanitario($_POST['img']??""); // Obtener el nombre del archivo de producto que vamos a actualizar
 
-        // Verificar si hubo un error al subir la imagen
         if ($_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
 
             $extension = pathinfo($_FILES['imagen']['name'], PATHINFO_EXTENSION);
@@ -18,9 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Mover la imagen a 'img/'
             if (move_uploaded_file($_FILES['imagen']['tmp_name'], $rutaImagen)) {
 
+                //actualizamos valor de columna img en BD(nombre de imagen)
                 try {
                     $conn = conectarDB();
-                    // Consulta preparada para evitar inyección SQL  
                     $stmt = $conn->prepare("UPDATE productos SET img = ? WHERE img = ?");
                     $stmt->bind_param('ss', $nombreImagen, $imgId);
                     $stmt->execute();
@@ -30,7 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                         $producto = obtenerUnProd($nombreImagen);
                         if ($producto) {
-                            $newCaracteristicas = explode(',', $producto['caracteristicas']);
                             $newImgSinExt = obtenerNombreDeArchivoSinExt($producto['img']);
                             $newExtension = obtenerExtDeArchivo($producto['img']);
                             $newNombreImagen = $newImgSinExt . '.' . $newExtension;
@@ -38,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 
                             <!--enviamos respuesta del servidor ----
-                            [<?php echo $newImgSinExt; ?>] estos corchetes para encontrar el ID de conteinedor que vamos a Actualizar despues de renovar imagen-->
+                            [<?php echo $newImgSinExt; ?>] estos corchetes para encontrar el ID de conteinedor que vamos a Actualizar com javaScript despues de renovar imagen-->
                             <div class="caja_producto">
                                 <div class="caja_prod_baton">
 
@@ -83,13 +81,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     } else {
                         echo "<h2>Error: No se pudo actualizar el producto.</h2>";
                     }
-
-                    // Cerrar la sentencia y la conexión
-                    $stmt->close();
-                    $conn->close();
                 } catch (mysqli_sql_exception $e) {
                     manejarError($e, "Error en la base de datos", false);
                     echo "Error en la base de datos";
+                }finally {
+                    if (isset($stmt)) {
+                        $stmt->close();
+                    }
+                    if (isset($conn)) {
+                        $conn->close();
+                    }
                 }
             } else {
                 echo "Error al mover la imagen.";

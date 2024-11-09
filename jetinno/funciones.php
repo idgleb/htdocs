@@ -10,9 +10,9 @@ function conectarDB($redirectSiError = true)
     global $host, $user, $password, $dbname;
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
     try {
-        $conexion = new mysqli($host, $user, $password);
-        $conexion->query("CREATE DATABASE IF NOT EXISTS $dbname");
-        $conexion->select_db($dbname);
+        $conn = new mysqli($host, $user, $password);
+        $conn->query("CREATE DATABASE IF NOT EXISTS $dbname");
+        $conn->select_db($dbname);
         // Crear la tabla si no existe  
         $tabla = "CREATE TABLE IF NOT EXISTS productos (  
             id INT AUTO_INCREMENT PRIMARY KEY,  
@@ -20,12 +20,9 @@ function conectarDB($redirectSiError = true)
             img VARCHAR(255) NOT NULL,  
             caracteristicas TEXT NOT NULL  
         )";
-        $conexion->query($tabla);
-        return $conexion;
+        $conn->query($tabla);
+        return $conn;
     } catch (mysqli_sql_exception $e) {
-        if (isset($conexion)) {
-            $conexion->close();
-        }
         manejarError($e, "Error en la connexion de base de datos", $redirectSiError);
     }
 }
@@ -66,26 +63,23 @@ function obtenerProdDeBase($redirectSiError, $limit = null, $offset = null)
         if ($limit !== null && $offset !== null) {
             $sql .= " LIMIT ? OFFSET ?";
         }
-        // Preparar la consulta
         $stmt = $conn->prepare($sql);
         if ($limit !== null && $offset !== null) {
             $stmt->bind_param('ii', $limit, $offset);
         }
         $stmt->execute();
-        // Obtener el resultado
         $result = $stmt->get_result();
-        $stmt->close();
-        $conn->close();
         return $result;
     } catch (mysqli_sql_exception $e) {
         manejarError($e, "Paso algo malo", $redirectSiError);
+        return null;
+    }finally {
         if (isset($stmt)) {
             $stmt->close();
         }
         if (isset($conn)) {
             $conn->close();
         }
-        return null;
     }
 }
 
@@ -103,18 +97,17 @@ function obtenerUnProd($nombreImagen)
         } else {
             $producto = null;
         }
-        $stmt->close();
-        $conn->close();
         return $producto;
     } catch (mysqli_sql_exception $e) {
         manejarError($e, "Paso algo malo", true);
+        return null;
+    }finally {
         if (isset($stmt)) {
             $stmt->close();
         }
         if (isset($conn)) {
             $conn->close();
         }
-        return null;
     }
 }
 
@@ -240,16 +233,19 @@ function calcularTotalPaginas($productosPorPagina)
         }
         $stmt->execute();
         $result = $stmt->get_result();
-        // Obtener el número total de productos
         $totalProductos = $result->fetch_assoc()['total'];
-        // Calcular el número total de páginas
         $totalPaginas = ceil($totalProductos / $productosPorPagina);
-        $stmt->close();
-        $conn->close();
     } catch (mysqli_sql_exception $e) {
         manejarError($e, "Paso algo malo", true);
     } catch (Exception $e) {
         manejarError($e, "error inesperado", true);
+    }finally {
+        if (isset($stmt)) {
+            $stmt->close();
+        }
+        if (isset($conn)) {
+            $conn->close();
+        }
     }
     return $totalPaginas;
 }

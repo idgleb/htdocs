@@ -43,11 +43,9 @@ $mensaje = "";
             // Verificar si hay prod
             if ($result->num_rows > 0) :
                 $iter = 0;
-                while ($row = $result->fetch_assoc()):
-                    // Convertir las características de la cadena a un array
-                    $caracteristicas = explode(',', $row['caracteristicas']);
-                    $imgSinExt = obtenerNombreDeArchivoSinExt($row['img']);
-                    $extension = obtenerExtDeArchivo($row['img']);
+                while ($producto = $result->fetch_assoc()):
+                    $imgSinExt = obtenerNombreDeArchivoSinExt($producto['img']);
+                    $extension = obtenerExtDeArchivo($producto['img']);
                     $nombreImagen = $imgSinExt . '.' . $extension;
                     $rutaImagen = 'img/' . $nombreImagen;
 
@@ -94,12 +92,15 @@ $mensaje = "";
                                         class="form-control"
                                         id="nombre_<?php echo $imgSinExt; ?>"
                                         name="nombre_<?php echo $imgSinExt; ?>"
-                                        rows="2"><?php echo $row['nombre']; ?></textarea>
+                                        rows="2"><?php echo $producto['nombre']; ?></textarea>
 
                                     <label for="caracteristicas_<?php echo $imgSinExt; ?>" class="form-label">Características del Producto</label>
 
                                     <textarea
-                                        onchange="subirText('<?php echo $imgSinExt; ?>','<?php echo $extension; ?>','caracteristicas')" ,class="form-control" id="caracteristicas_<?php echo $imgSinExt; ?>" name="caracteristicas_<?php echo $imgSinExt; ?>" rows="4"><?php echo $row['caracteristicas']; ?></textarea>
+                                        onchange="subirText('<?php echo $imgSinExt; ?>','<?php echo $extension; ?>','caracteristicas')"
+                                        class="form-control" id="caracteristicas_<?php echo $imgSinExt; ?>"
+                                        name="caracteristicas_<?php echo $imgSinExt; ?>"
+                                        rows="4"><?php echo $producto['caracteristicas']; ?></textarea>
 
                                 </div>
                             </div>
@@ -213,16 +214,16 @@ $mensaje = "";
                     // Ocultar el spinner al finalizar  
                     spinner = document.getElementById('spinner_' + imgSinExt);
                     spinner.classList.add('d-none'); // Oculta el spinner  
-                    
+
                 });
         }
     }
 
 
+    // Función para subir el texto corregido mediante AJAX
+    function subirText(imgSinExt, imgExt, columna) {
 
-    function subirText(imgSinExt, imgExt, tipo) {
-
-        var textarea = document.getElementById(tipo + '_' + imgSinExt);
+        var textarea = document.getElementById(columna + '_' + imgSinExt);
 
         if (textarea) {
 
@@ -232,7 +233,7 @@ $mensaje = "";
             let body = 'text=' + encodeURIComponent(text) +
                 '&imgSinExt=' + encodeURIComponent(imgSinExt) +
                 '&extension=' + encodeURIComponent(imgExt) +
-                '&tipo=' + encodeURIComponent(tipo);
+                '&columna=' + encodeURIComponent(columna);
 
             fetch('subir_text.php', {
                     method: 'POST',
@@ -256,7 +257,7 @@ $mensaje = "";
                 });
 
         } else {
-            alert("El elemento " + tipo + "_" + imgSinExt + " no existe");
+            alert("El elemento " + columna + "_" + imgSinExt + " no existe");
         }
     }
 </script>

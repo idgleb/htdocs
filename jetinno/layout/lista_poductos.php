@@ -20,11 +20,12 @@ if ($result->num_rows > 0) :
     $iter = 0;
     while ($row = $result->fetch_assoc()):
         // Convertir las características de la cadena a un array
+        // * si hay este simbolo en caracteristica - dividimos a un array para generar lista si nesesito
         $caracteristicas = explode('*', $row['caracteristicas']);
         $iter++;
         $imgSinExt = obtenerNombreDeArchivoSinExt($row['img']);
 
-        /////// lista de productos /////////
+        /////// Productos /////////
         if ($iter % 2 != 0): ?>
             <div class="col_row">
             <?php endif; ?>
@@ -49,7 +50,7 @@ if ($result->num_rows > 0) :
         <?php endif; ?>
         <!--///////////////////////////////-->
 
-        <!--lista de ventanas modales para productos////////-->
+        <!--Ventanas modales para productos////////-->
         <div id="venta_<?php echo $imgSinExt; ?>">
             <div class="modal_prod">
                 <div class="caja_img_producto_mod">

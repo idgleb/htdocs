@@ -10,7 +10,7 @@ $mensaje = "";
 
 <?php
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') { // evitamos procesar datos enviados por GET
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nombreProducto = sanitario($_POST['nombreProducto']??"");
     $caracteristicasProducto = sanitario($_POST['caracteristicasProducto']??"");
     // Procesar la imagen
@@ -23,15 +23,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // evitamos procesar datos enviados 
             //  insertar los datos en la base de datos
             try {
                 $conn = conectarDB();
-                $stmt = $conn->prepare("INSERT INTO productos (nombre, img, caracteristicas) VALUES (?, ?, ?)"); //preparar una consulta SQL que se ejecutará mas tarde
-                $stmt->bind_param("sss", $nombreProducto, $nombreImagen, $caracteristicasProducto);  // enlaza los tres valores a los tres placeholders ? 
+                $stmt = $conn->prepare("INSERT INTO productos (nombre, img, caracteristicas) VALUES (?, ?, ?)"); 
+                $stmt->bind_param("sss", $nombreProducto, $nombreImagen, $caracteristicasProducto);  
                 // Ejecutar la consulta 
                 $stmt->execute();
-                $stmt->close();
-                $conn->close();
                 $mensaje = "Producto agregado con exito";
             } catch (mysqli_sql_exception $e) {
                 manejarError($e, "Paso algo malo", true);
+            } finally {
+                if (isset($stmt)) {
+                    $stmt->close();
+                }
+                if (isset($conn)) {
+                    $conn->close();
+                }
             }
         } else {
             $mensaje = "Error guardar la imagen";
