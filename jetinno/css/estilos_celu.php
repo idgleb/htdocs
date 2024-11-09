@@ -70,7 +70,7 @@ background-image: url(../img/fondo_footer.png);
 
 
 .width90centr {
-width: 90%;
+width: 95%;
 margin: auto;
 }
 
@@ -151,22 +151,30 @@ align-items: center;
 }
 
 h2 {
-font-size: 20pt;
+font-size: 15pt;
 text-align: center;
 padding-top: 10px;
-padding-bottom: 15px;
+padding-bottom: 12px;
 }
+
+h3 {
+    font-size: 13pt;
+}
+
+
 
 h3,
 ul,
 .caja_prod_baton {
-padding: 15px;
+padding: 12px;
 }
 
 ul li,
-.baton a {
-font-size: 12pt;
+.baton {
+font-size: 10pt;
 }
+
+
 
 .caja_prod_baton {
 display: flex;
@@ -187,6 +195,13 @@ border-width: 2px;
 background-color: rgb(255, 255, 255);
 }
 
+
+.col_row {
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+}
 
 
 .col_row_top {

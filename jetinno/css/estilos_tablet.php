@@ -173,7 +173,7 @@ padding: 15px;
 }
 
 ul li,
-.baton a {
+.baton {
 font-size: 12pt;
 }
 
@@ -194,6 +194,14 @@ border-color: black;
 border-style: solid;
 border-width: 2px;
 background-color: rgb(255, 255, 255);
+}
+
+.col_row {
+display: flex;
+flex-direction: column;
+justify-content: center;
+padding: 10px;
+align-items: center;
 }
 
 
