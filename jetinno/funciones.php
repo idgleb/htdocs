@@ -3,7 +3,8 @@
 $host = 'localhost';
 $user = 'root';
 $password = '';
-$dbname = 'jetinno_base_de_datos';
+//$dbname = 'jetinno_base_de_datos';
+$dbname = 'c1402791_ddd';
 
 function conectarDB($redirectSiError = true)
 {
