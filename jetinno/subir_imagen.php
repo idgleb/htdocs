@@ -5,7 +5,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (isset($_FILES['imagen']) && isset($_POST['img'])) {
 
-        $imgId = sanitario($_POST['img']??""); // Obtener el nombre del archivo de producto que vamos a actualizar
+        $imgId = sanitario($_POST['img'] ?? ""); // Obtener el nombre del archivo de producto que vamos a actualizar
 
         if ($_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
 
@@ -64,10 +64,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <div class="text_prod_cont">
 
                                     <label for="nombre_<?php echo $newImgSinExt; ?>" class="form-label">Nombre del Producto</label>
-                                    <textarea class="form-control" id="nombre_<?php echo $newImgSinExt; ?>" name="nombre_<?php echo $newImgSinExt; ?>" rows="2"><?php echo $producto['nombre']; ?></textarea>
+                                    <textarea
+                                        onchange="subirText('<?php echo $newImgSinExt; ?>','<?php echo $newExtension; ?>','nombre')"
+                                        class="form-control"
+                                        id="nombre_<?php echo $newImgSinExt; ?>"
+                                        name="nombre_<?php echo $newImgSinExt; ?>"
+                                        rows="2"><?php echo $producto['nombre']; ?></textarea>
 
-                                    <label for="caracter_<?php echo $newImgSinExt; ?>" class="form-label">Características del Producto</label>
-                                    <textarea class="form-control" id="caracter_<?php echo $newImgSinExt; ?>" name="caracter_<?php echo $newImgSinExt; ?>" rows="4"><?php echo $producto['caracteristicas']; ?></textarea>
+                                    <label for="caracteristicas_<?php echo $newImgSinExt; ?>" class="form-label">Características del Producto</label>
+                                    <textarea
+                                        onchange="subirText('<?php echo $newImgSinExt; ?>','<?php echo $newExtension; ?>','caracteristicas')"
+                                        class="form-control"
+                                        id="caracteristicas_<?php echo $newImgSinExt; ?>"
+                                        name="caracteristicas_<?php echo $newImgSinExt; ?>"
+                                        rows="4"><?php echo $producto['caracteristicas']; ?></textarea>
 
                                 </div>
 
@@ -84,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 } catch (mysqli_sql_exception $e) {
                     manejarError($e, "Error en la base de datos", false);
                     echo "Error en la base de datos";
-                }finally {
+                } finally {
                     if (isset($stmt)) {
                         $stmt->close();
                     }

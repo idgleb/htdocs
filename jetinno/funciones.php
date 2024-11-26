@@ -249,3 +249,50 @@ function calcularTotalPaginas($productosPorPagina)
     }
     return $totalPaginas;
 }
+
+
+// Registrar un nuevo usuario
+function registrarUsuario($user_login, $password_plain) {
+    $hashed_password = password_hash($password_plain, PASSWORD_DEFAULT);
+
+    try {
+        $pdo = new PDO('mysql:host=localhost;dbname=mi_base_de_datos', 'usuario', 'contraseña');
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $stmt = $pdo->prepare("INSERT INTO usuarios (user_login, user_pass) VALUES (:user_login, :user_pass)");
+        $stmt->execute([
+            ':user_login' => $user_login,
+            ':user_pass' => $hashed_password
+        ]);
+
+        echo "Usuario registrado con éxito.";
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+
+// Verificar usuario y contraseña al iniciar sesión
+function verificarUsuario($user_login, $password_plain) {
+    try {
+        $pdo = new PDO('mysql:host=localhost;dbname=mi_base_de_datos', 'usuario', 'contraseña');
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $stmt = $pdo->prepare("SELECT user_pass FROM usuarios WHERE user_login = :user_login");
+        $stmt->execute([':user_login' => $user_login]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+            $hashed_password = $row['user_pass'];
+            if (password_verify($password_plain, $hashed_password)) {
+                echo "Inicio de sesión exitoso.";
+            } else {
+                echo "Contraseña incorrecta.";
+            }
+        } else {
+            echo "Usuario no encontrado.";
+        }
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+
