@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<?php $title="INICIO"; ?>
+<?php $title="JETINNO ARGENTINA. Maquinas expendedoras de Cafe"; ?>
 <?php include 'layout/metedatos_css.php'; ?>
 
 <body>
@@ -49,7 +49,7 @@
 
 
         <section class="baner">
-            <h2 class="baner_title">ACERCA DE JETINNO</h2>
+            <h2 class="baner_title">ACERCA DE JETINNO ARGENTINA</h2>
             <p class="baner_text">Buen café para inspirar mejor la vida de las personas.</p>
         </section>
 
